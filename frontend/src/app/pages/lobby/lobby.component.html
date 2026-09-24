@@ -1,0 +1,33 @@
+<main class="lobby">
+  @if (room) {
+    <section class="panel">
+      <p class="label">ROOM</p>
+      <h1>{{ room.code }}</h1>
+      <p>{{ room.players.length }} / 5 joueurs</p>
+
+      <div class="players">
+        @for (player of room.players; track player.id) {
+          <div class="player">
+            <span>{{ player.displayName }}</span>
+            <span>
+              @if (player.host) { 👑 }
+              @if (player.spotifyConnected) { ✓ Spotify }
+              @else { Spotify à connecter }
+            </span>
+          </div>
+        }
+      </div>
+
+      <p class="next">
+        Prochaine étape : connecter Spotify pour chaque joueur.
+      </p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="panel">
+      <p>{{ errorMessage }}</p>
+      <a routerLink="/">Retour</a>
+    </section>
+  } @else {
+    <p>Chargement…</p>
+  }
+</main>
