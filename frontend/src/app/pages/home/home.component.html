@@ -1,0 +1,41 @@
+<main class="home">
+  <section class="card">
+    <p class="eyebrow">MUSIC GAME</p>
+    <h1>Qui écoute ça&nbsp;?</h1>
+    <p class="subtitle">
+      Transforme les goûts Spotify de tes amis en jeu de soirée.
+    </p>
+
+    <label for="name">Ton pseudo</label>
+    <input
+      id="name"
+      [(ngModel)]="displayName"
+      maxlength="30"
+      placeholder="Gwen"
+      autocomplete="off"
+    />
+
+    <button class="primary" (click)="createRoom()" [disabled]="loading">
+      Créer une partie
+    </button>
+
+    <div class="separator"><span>ou</span></div>
+
+    <label for="room">Code de la room</label>
+    <input
+      id="room"
+      [(ngModel)]="roomCode"
+      maxlength="4"
+      placeholder="ABCD"
+      autocomplete="off"
+    />
+
+    <button (click)="joinRoom()" [disabled]="loading">
+      Rejoindre
+    </button>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </section>
+</main>
