@@ -1,9 +1,7 @@
 package com.musicgame.dto;
 
-import com.musicgame.model.GameRoom;
-
 public record RoomJoinResponse(
-        GameRoom room,
+        RoomView room,
         String playerId
 ) {
 }
