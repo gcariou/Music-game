@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: music-game-backend
+
+server:
+  port: 8080
+
+app:
+  frontend-url: http://localhost:4200
