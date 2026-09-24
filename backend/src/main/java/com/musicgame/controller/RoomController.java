@@ -3,6 +3,7 @@ package com.musicgame.controller;
 import com.musicgame.dto.CreateRoomRequest;
 import com.musicgame.dto.JoinRoomRequest;
 import com.musicgame.dto.RoomJoinResponse;
+import com.musicgame.dto.RoomView;
 import com.musicgame.model.GameRoom;
 import com.musicgame.model.Player;
 import com.musicgame.service.RoomService;
@@ -25,7 +26,10 @@ public class RoomController {
     @ResponseStatus(HttpStatus.CREATED)
     public RoomJoinResponse createRoom(@Valid @RequestBody CreateRoomRequest request) {
         RoomService.RoomCreation creation = roomService.createRoom(request.displayName());
-        return new RoomJoinResponse(creation.room(), creation.host().getId());
+        return new RoomJoinResponse(
+                RoomView.from(creation.room()),
+                creation.host().getId()
+        );
     }
 
     @PostMapping("/{code}/players")
@@ -36,11 +40,15 @@ public class RoomController {
     ) {
         Player player = roomService.joinRoom(code, request.displayName());
         GameRoom room = roomService.getRequiredRoom(code);
-        return new RoomJoinResponse(room, player.getId());
+
+        return new RoomJoinResponse(
+                RoomView.from(room),
+                player.getId()
+        );
     }
 
     @GetMapping("/{code}")
-    public GameRoom getRoom(@PathVariable String code) {
-        return roomService.getRequiredRoom(code);
+    public RoomView getRoom(@PathVariable String code) {
+        return RoomView.from(roomService.getRequiredRoom(code));
     }
 }
